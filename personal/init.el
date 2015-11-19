@@ -62,6 +62,7 @@
 (add-to-list 'load-path "/Users/jasomyer/.emacs.d/lisp")
 (require 'go-autocomplete)
 (require 'auto-complete-config)
+(ac-config-default)
 (add-to-list 'ac-dictionary-directories "/Users/jasomyer/.emacs.d/lisp/ac-dict")
 (ac-config-default)
 
