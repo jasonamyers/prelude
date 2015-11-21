@@ -4,11 +4,17 @@
 (prelude-require-package 'smart-mode-line)
 (prelude-require-package 'elpy)
 (prelude-require-package 'dracula-theme)
-(load-theme 'dracula t)
+(load-theme 'leuven t)
+
+;; Reduce the time after which the company auto completion popup opens
+(setq company-idle-delay 0.2)
+
+;; Reduce the number of characters before company kicks in
+(setq company-minimum-prefix-length 1)
 
 (elpy-enable)
 (setq column-number-mode 't)
-(setq sml/theme 'dark)
+(setq sml/theme 'respectful)
 (setq sml/shorten-modes 't)
 (sml/setup)
 (add-hook 'after-init-hook 'sml/setup)
@@ -60,13 +66,14 @@
 (add-to-list 'exec-path "/Users/jasomyer/dev/go/bin")
 
 (add-to-list 'load-path "/Users/jasomyer/.emacs.d/lisp")
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
-(add-to-list 'ac-dictionary-directories "/Users/jasomyer/.emacs.d/lisp/ac-dict")
-(ac-config-default)
+;; (require 'go-autocomplete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (add-to-list 'ac-dictionary-directories "/Users/jasomyer/.emacs.d/lisp/ac-dict")
+;; (ac-config-default)
 
-(require 'go-autocomplete)
+;; (require 'go-autocomplete)
+(require 'company-go)
 
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
@@ -81,3 +88,18 @@
   (local-set-key (kbd "M-.") 'godef-jump))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 (load-file "$GOPATH/src/golang.org/x/tools/cmd/oracle/oracle.el")
+
+;; Set path to racer binary
+(setq racer-cmd "/usr/local/bin/racer")
+;; Set path to rust src directory
+(setq racer-rust-src-path "/Users/jasomyer/.rust/src/")
+;; Load rust-mode when you open `.rs` files
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+;; Setting up configurations when you load rust-mode
+
+(add-hook 'racer-mode-hook #'company-mode)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common) ;
+(setq company-tooltip-align-annotations t)
