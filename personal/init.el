@@ -3,8 +3,12 @@
 (prelude-require-package 'rainbow-delimiters)
 (prelude-require-package 'smart-mode-line)
 (prelude-require-package 'elpy)
+(prelude-require-package 'ein)
+(prelude-require-package 'py-autopep8)
 (prelude-require-package 'dracula-theme)
-(load-theme 'leuven t)
+
+(load-theme 'dracula t)
+(global-linum-mode t) ;; enable line numbers globally
 
 ;; Reduce the time after which the company auto completion popup opens
 (setq company-idle-delay 0.2)
@@ -12,7 +16,6 @@
 ;; Reduce the number of characters before company kicks in
 (setq company-minimum-prefix-length 1)
 
-(elpy-enable)
 (setq column-number-mode 't)
 (setq sml/theme 'respectful)
 (setq sml/shorten-modes 't)
@@ -32,12 +35,27 @@
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
 (setq backup-by-copying t)
 
+;; PYTHON CONFIGURATION
+;; --------------------------------------
+
+(elpy-enable)
+
+
+;; use flycheck not flymake with elpy
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; enable autopep8 formatting on save
+(require 'py-autopep8)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 (add-hook 'python-mode-hook
           (lambda ()
             (progn
               (setq whitespace-line-column 79)
               (setq whitespace-style '(face lines-tail))
-              (whitespace-mode))))
+              (whitespace-mode)
+              (elpy-use-ipython))))
 
 ;;; Set default font
 (defun fontify-frame (frame)
