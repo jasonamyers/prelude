@@ -1,10 +1,16 @@
 ;; Personal preferences
 (setq bell-volume 0)
 (prelude-require-package 'rainbow-delimiters)
+(prelude-require-package 'smex)
+(prelude-require-package 'company-go)
 (prelude-require-package 'smart-mode-line)
 (prelude-require-package 'elpy)
 (prelude-require-package 'ein)
 (prelude-require-package 'py-autopep8)
+(prelude-require-package 'company-racer)
+(prelude-require-package 'racer)
+(prelude-require-package 'flycheck-rust)
+(prelude-require-package 'rust-mode)
 (prelude-require-package 'dracula-theme)
 
 (load-theme 'dracula t)
@@ -79,15 +85,15 @@
 
 (when window-system (set-exec-path-from-shell-PATH))
 
-(setenv "GOPATH" "/Users/jasomyer/dev/go")
+(setenv "GOPATH" "/home/jasomyer/dev/go")
 (setq exec-path (cons "/usr/local/go/bin" exec-path))
-(add-to-list 'exec-path "/Users/jasomyer/dev/go/bin")
+(add-to-list 'exec-path "/home/jasomyer/dev/go/bin")
 
-(add-to-list 'load-path "/Users/jasomyer/.emacs.d/lisp")
+(add-to-list 'load-path "/home/jasomyer/.emacs.d/lisp")
 ;; (require 'go-autocomplete)
 ;; (require 'auto-complete-config)
 ;; (ac-config-default)
-;; (add-to-list 'ac-dictionary-directories "/Users/jasomyer/.emacs.d/lisp/ac-dict")
+;; (add-to-list 'ac-dictionary-directories "/home/jasomyer/.emacs.d/lisp/ac-dict")
 ;; (ac-config-default)
 
 ;; (require 'go-autocomplete)
@@ -110,7 +116,7 @@
 ;; Set path to racer binary
 (setq racer-cmd "/usr/local/bin/racer")
 ;; Set path to rust src directory
-(setq racer-rust-src-path "/Users/jasomyer/.rust/src/")
+(setq racer-rust-src-path "/home/jasomyer/.rust/src/")
 ;; Load rust-mode when you open `.rs` files
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 ;; Setting up configurations when you load rust-mode
